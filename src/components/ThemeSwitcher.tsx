@@ -7,10 +7,12 @@ export function ThemeSwitcher() {
   const [isOpen, setIsOpen] = createSignal(false);
   const themeMode = getThemeMode();
 
-  const themes: ThemeMode[] = ["light", "dark", "system"];
+  const themes: ThemeMode[] = ["lavender", "light", "dark", "system"];
 
   const getThemeLabel = (mode: ThemeMode): string => {
     switch (mode) {
+      case "lavender":
+        return t().settings.themeLavender;
       case "light":
         return t().settings.themeLight;
       case "dark":
@@ -22,6 +24,12 @@ export function ThemeSwitcher() {
 
   const getThemeIcon = (mode: ThemeMode) => {
     switch (mode) {
+      case "lavender":
+        return (
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M7 1h2v3h3v2H9v3H7V6H4V4h3ZM3 10h2v2h2v2H5v2H3v-2H1v-2h2ZM12 9h2v2h2v2h-2v2h-2v-2h-2v-2h2Z" />
+          </svg>
+        );
       case "light":
         return (
           <svg

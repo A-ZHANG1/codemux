@@ -95,6 +95,28 @@ export interface LocaleDict {
     sessionScopeHint: string;
   };
 
+  agentRoom: {
+    title: string;
+    eyebrow: string;
+    toggle: string;
+    hide: string;
+    home: string;
+    mission: string;
+    lead: string;
+    agentName: string;
+    activeCount: string;
+    idle: string;
+    working: string;
+    waiting: string;
+    completed: string;
+    error: string;
+    stopped: string;
+    offline: string;
+    empty: string;
+    noSession: string;
+    hint: string;
+  };
+
   // Settings page
   settings: {
     back: string;
@@ -107,6 +129,7 @@ export interface LocaleDict {
     themeLight: string;
     themeDark: string;
     themeSystem: string;
+    themeLavender: string;
     security: string;
     devicesDesc: string;
     logging: string;
@@ -802,6 +825,28 @@ export const en: LocaleDict = {
     sessionScopeHint: "Applies to this session only. Defaults for new sessions live in Settings.",
   },
 
+  agentRoom: {
+    title: "Pixel crew",
+    eyebrow: "A little room for big ideas",
+    toggle: "Toggle pixel crew",
+    hide: "Hide pixel crew",
+    home: "HOME BASE",
+    mission: "ON A MISSION",
+    lead: "Lead agent",
+    agentName: "Agent {count}",
+    activeCount: "{count} working now",
+    idle: "Ready",
+    working: "On a mission",
+    waiting: "Waiting",
+    completed: "Back home",
+    error: "Needs attention",
+    stopped: "Stopped",
+    offline: "Disconnected",
+    empty: "A quiet moment. When a task is delegated, its agent joins the room.",
+    noSession: "Choose a project and start a conversation to bring the room to life.",
+    hint: "Live session activity, not a simulation. Agents head out on tasks and return when they finish.",
+  },
+
   // Settings page
   settings: {
     back: "Back",
@@ -814,6 +859,7 @@ export const en: LocaleDict = {
     themeLight: "Light",
     themeDark: "Dark",
     themeSystem: "System",
+    themeLavender: "Lavender",
     security: "Security",
     devicesDesc: "Manage devices that can access this server",
     logging: "Logging",

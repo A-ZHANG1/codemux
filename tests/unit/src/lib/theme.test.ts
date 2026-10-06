@@ -103,12 +103,13 @@ beforeEach(() => {
 
 describe("theme module", () => {
   describe("default theme", () => {
-    it("defaults to dark when no setting is saved", async () => {
+    it("defaults to lavender when no setting is saved", async () => {
       setupDom();
       const { getThemeMode, getEffectiveTheme } = await import("../../../../src/lib/theme");
-      expect(getThemeMode()()).toBe("dark");
-      expect(getEffectiveTheme()).toBe("dark");
-      expect(htmlClasses().has("dark")).toBe(true);
+      expect(getThemeMode()()).toBe("lavender");
+      expect(getEffectiveTheme()).toBe("light");
+      expect(htmlClasses().has("dark")).toBe(false);
+      expect(htmlClasses().has("lavender")).toBe(true);
     });
 
     it("uses persisted theme when present", async () => {
@@ -119,14 +120,14 @@ describe("theme module", () => {
       expect(htmlClasses().has("dark")).toBe(false);
     });
 
-    it("ignores invalid persisted values and falls back to dark", async () => {
+    it("ignores invalid persisted values and falls back to lavender", async () => {
       settingsBacking.set("theme", "neon");
       setupDom();
       const { getThemeMode } = await import("../../../../src/lib/theme");
-      expect(getThemeMode()()).toBe("dark");
+      expect(getThemeMode()()).toBe("lavender");
     });
 
-    it.each(["light", "dark", "system"] as const)(
+    it.each(["lavender", "light", "dark", "system"] as const)(
       "accepts persisted value %s",
       async (mode) => {
         settingsBacking.set("theme", mode);
@@ -138,6 +139,20 @@ describe("theme module", () => {
   });
 
   describe("setThemeMode", () => {
+    it("removes lavender styling when switching back to an existing theme", async () => {
+      setupDom();
+      const { setThemeMode, getEffectiveTheme } = await import("../../../../src/lib/theme");
+      setThemeMode("dark");
+      expect(htmlClasses().has("lavender")).toBe(false);
+      setThemeMode("lavender");
+      expect(htmlClasses().has("lavender")).toBe(true);
+      expect(htmlClasses().has("dark")).toBe(false);
+      expect(getEffectiveTheme()).toBe("light");
+      expect(settingsBacking.get("theme")).toBe("lavender");
+      setThemeMode("light");
+      expect(htmlClasses().has("lavender")).toBe(false);
+    });
+
     it("applies dark and persists the choice", async () => {
       setupDom();
       const { setThemeMode } = await import("../../../../src/lib/theme");
@@ -173,6 +188,16 @@ describe("theme module", () => {
   });
 
   describe("title bar overlay sync", () => {
+    it("uses lavender title bar colors", async () => {
+      setupDom();
+      const { setThemeMode } = await import("../../../../src/lib/theme");
+      setThemeMode("lavender");
+      expect(updateTitleBarOverlayMock).toHaveBeenCalledWith({
+        color: "#f3edfc",
+        symbolColor: "#705491",
+      });
+    });
+
     it("calls updateTitleBarOverlay with dark colors for dark theme", async () => {
       setupDom();
       const { setThemeMode } = await import("../../../../src/lib/theme");
@@ -253,7 +278,7 @@ describe("theme module", () => {
       const { refreshThemeFromSettings, getThemeMode } = await import(
         "../../../../src/lib/theme"
       );
-      // Initial mode is dark (default). Change settings out-of-band, then refresh.
+      // Change settings out-of-band, then refresh.
       settingsBacking.set("theme", "light");
       refreshThemeFromSettings();
       expect(getThemeMode()()).toBe("light");

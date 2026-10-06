@@ -27,7 +27,7 @@ export function isSharedSettingsKey(key: string): key is SharedSettingsKey {
 // Value validation for PATCH /api/settings/shared
 // ---------------------------------------------------------------------------
 
-const VALID_THEMES = new Set(["light", "dark", "system"]);
+const VALID_THEMES = new Set(["lavender", "light", "dark", "system"]);
 const VALID_LOCALES = new Set(["en", "zh", "ru"]);
 const VALID_REASONING_EFFORTS = new Set(["low", "medium", "high", "max"]);
 const VALID_SERVICE_TIERS = new Set(["fast", "flex"]);

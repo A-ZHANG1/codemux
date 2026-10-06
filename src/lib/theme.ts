@@ -2,14 +2,14 @@ import { createSignal, Accessor } from "solid-js";
 import { logger } from "./logger";
 import { getSetting, saveSetting } from "./settings";
 
-export type ThemeMode = "light" | "dark" | "system";
+export type ThemeMode = "lavender" | "light" | "dark" | "system";
 
 function getSavedTheme(): ThemeMode {
   const saved = getSetting<string>("theme");
-  if (saved && ["light", "dark", "system"].includes(saved)) {
+  if (saved && ["lavender", "light", "dark", "system"].includes(saved)) {
     return saved as ThemeMode;
   }
-  return "dark";
+  return "lavender";
 }
 
 function saveTheme(theme: ThemeMode): void {
@@ -25,7 +25,7 @@ function getSystemTheme(): "light" | "dark" {
   return "light";
 }
 
-function syncTitleBarOverlay(theme: "light" | "dark"): void {
+function syncTitleBarOverlay(theme: "lavender" | "light" | "dark"): void {
   if (typeof window === "undefined") return;
 
   const doSync = () => {
@@ -35,6 +35,8 @@ function syncTitleBarOverlay(theme: "light" | "dark"): void {
 
     if (theme === "dark") {
       updateFn({ color: "#020617", symbolColor: "#94a3b8" }); // slate-950
+    } else if (theme === "lavender") {
+      updateFn({ color: "#f3edfc", symbolColor: "#705491" });
     } else {
       updateFn({ color: "#f8fafc", symbolColor: "#475569" }); // slate-50
     }
@@ -50,6 +52,10 @@ function applyTheme(theme: ThemeMode): void {
   const root = document.documentElement;
   const effectiveTheme = theme === "system" ? getSystemTheme() : theme;
 
+  root.classList.remove("lavender");
+  if (effectiveTheme === "lavender") {
+    root.classList.add("lavender");
+  }
   if (effectiveTheme === "dark") {
     root.classList.add("dark");
   } else {
@@ -91,5 +97,5 @@ export function getThemeMode(): Accessor<ThemeMode> {
 
 export function getEffectiveTheme(): "light" | "dark" {
   const mode = themeMode();
-  return mode === "system" ? getSystemTheme() : mode;
+  return mode === "system" ? getSystemTheme() : mode === "lavender" ? "light" : mode;
 }

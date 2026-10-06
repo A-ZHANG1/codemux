@@ -6,7 +6,7 @@
  *
  * Settings shape in settings.json:
  * {
- *   "theme": "light" | "dark" | "system",
+ *   "theme": "lavender" | "light" | "dark" | "system",
  *   "locale": "en" | "zh",
  *   "logLevel": "error" | "warn" | "info" | ...,
  *   "engineModels": {

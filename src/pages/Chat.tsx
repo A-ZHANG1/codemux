@@ -71,6 +71,7 @@ import { saveScrollPosition, deleteScrollPosition, resolveRemountScroll, resolve
 import { InputAreaQuestion } from "../components/InputAreaQuestion";
 import { InputAreaPermission } from "../components/InputAreaPermission";
 import { TodoDock } from "../components/TodoDock";
+import { AgentRoom } from "../components/AgentRoom";
 const FileExplorer = lazy(() =>
   import("../components/FileExplorer").then((m) => ({
     default: m.FileExplorer,
@@ -625,6 +626,14 @@ export default function Chat() {
   const [isMobile, setIsMobile] = createSignal(window.innerWidth < 768);
   // Desktop sidebar collapse (icon-only mode)
   const [isSidebarCollapsed, setIsSidebarCollapsed] = createSignal(false);
+  const [isAgentRoomOpen, setIsAgentRoomOpen] = createSignal(
+    getSetting<boolean>("agentRoomOpen") ?? window.innerWidth >= 1200,
+  );
+  const handleAgentRoomToggle = () => {
+    const next = !isAgentRoomOpen();
+    setIsAgentRoomOpen(next);
+    void saveSetting("agentRoomOpen", next);
+  };
   const [refreshingSessions, setRefreshingSessions] = createSignal(false);
 
   // Send validation error (auto-clears after 3s)
@@ -2527,7 +2536,7 @@ export default function Chat() {
 
       {/* Unified Titlebar — 40px, spans full width */}
       <div
-        class="w-full flex-shrink-0 flex items-center px-2 border-b border-gray-200 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 electron-drag-region electron-titlebar-pad-left electron-titlebar-pad-right"
+        class="workspace-titlebar w-full flex-shrink-0 flex items-center px-2 border-b border-gray-200 dark:border-slate-800 bg-gray-50 dark:bg-slate-950 electron-drag-region electron-titlebar-pad-left electron-titlebar-pad-right"
         style={{ height: "var(--electron-title-bar-height, 40px)", "min-height": "var(--electron-title-bar-height, 40px)" }}
       >
         {/* Brand: Logo + App name (CSS order moves it right on macOS) */}
@@ -2609,6 +2618,23 @@ export default function Chat() {
 
         {/* Right: Terminal toggle + File explorer toggle + connection status */}
         <div class="flex items-center gap-1.5 electron-no-drag flex-shrink-0">
+          <button
+            type="button"
+            onClick={handleAgentRoomToggle}
+            class={`p-1.5 rounded-md transition-colors ${
+              isAgentRoomOpen()
+                ? "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
+                : "text-gray-500 hover:bg-gray-100 dark:hover:bg-slate-800"
+            }`}
+            title={t().agentRoom.toggle}
+            aria-label={t().agentRoom.toggle}
+            aria-expanded={isAgentRoomOpen()}
+            aria-controls="agent-room"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M4 1h8v2h2v8h-2v3H9v-3H7v3H4v-3H2V3h2Zm0 4v3h3V5Zm5 0v3h3V5Z" />
+            </svg>
+          </button>
           <Show when={sessionStore.current}>
             <button
               onClick={handleToggleTerminal}
@@ -2767,7 +2793,7 @@ export default function Chat() {
 
       {/* Top row: chat area + file explorer */}
       <div class="flex-1 flex overflow-hidden min-w-0 min-h-0">
-      <div class="flex-1 flex flex-col overflow-hidden min-w-0 bg-white dark:bg-slate-900">
+      <div class="workspace-chat flex-1 flex flex-col overflow-hidden min-w-0 bg-white dark:bg-slate-900">
 
 
 
@@ -3120,6 +3146,15 @@ export default function Chat() {
       </div>
 
       </div>
+      <Show when={isAgentRoomOpen()}>
+        <AgentRoom
+          sessionId={sessionStore.current}
+          sending={sending()}
+          waiting={currentPermissions().length > 0 || currentQuestions().length > 0}
+          connected={wsConnected()}
+          onClose={handleAgentRoomToggle}
+        />
+      </Show>
       </div>
 
       <HideProjectModal

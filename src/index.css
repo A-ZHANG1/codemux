@@ -92,6 +92,51 @@
   --sl-color-orange-high: #fdba74;
 }
 
+/* Keep the existing utility palette and semantic surfaces in sync. */
+:root.lavender {
+  --color-gray-50: #f9f5ff;
+  --color-gray-100: #f1eafa;
+  --color-gray-200: #e3d8f0;
+  --color-gray-300: #c9b8dd;
+  --color-gray-400: #927ba8;
+  --color-gray-500: #77618f;
+  --color-gray-600: #624e7a;
+  --color-gray-700: #513d68;
+  --color-gray-800: #39294d;
+  --color-gray-900: #2e213f;
+  --color-blue-50: #f6f0ff;
+  --color-blue-100: #ede1ff;
+  --color-blue-200: #dcc5fa;
+  --color-blue-400: #a17ad2;
+  --color-blue-500: #895bbd;
+  --color-blue-600: #7648aa;
+  --color-blue-700: #623b8f;
+  --color-background: #fdfaff;
+  --color-background-weak: #f3edfc;
+  --color-text: #624e7a;
+  --color-text-weak: #927ba8;
+  --color-text-strong: #2e213f;
+  --color-border: #e3d8f0;
+  --color-icon: #927ba8;
+  --sl-color-text: #39294d;
+  --sl-color-text-secondary: #77618f;
+  --sl-color-text-dimmed: #927ba8;
+  --sl-color-divider: #e3d8f0;
+  --sl-color-border: #e3d8f0;
+  --sl-color-hairline: #f1eafa;
+  --sl-color-bg-surface: #fdfaff;
+  --sl-color-bg-alt: #f9f5ff;
+  --sl-color-bg-hover: #f1eafa;
+}
+
+:root.lavender .workspace-titlebar {
+  background: #f3edfc;
+}
+
+:root.lavender .workspace-chat {
+  background: #fdfaff;
+}
+
 body {
   margin: 0;
   font-family: var(--font-sans);

@@ -93,6 +93,28 @@ export const zh: LocaleDict = {
     sessionScopeHint: "仅对当前会话生效。新建会话的默认值请在设置中配置。",
   },
 
+  agentRoom: {
+    title: "像素小队",
+    eyebrow: "小小房间，大大灵感",
+    toggle: "切换像素小队",
+    hide: "收起像素小队",
+    home: "小队基地",
+    mission: "任务现场",
+    lead: "主代理",
+    agentName: "代理 {count}",
+    activeCount: "{count} 位正在工作",
+    idle: "待命",
+    working: "出任务中",
+    waiting: "等待中",
+    completed: "已归队",
+    error: "需要关注",
+    stopped: "已停止",
+    offline: "连接已断开",
+    empty: "暂时安静的小屋。任务被委派时，对应的代理就会加入。",
+    noSession: "选择一个项目，开始对话，让小屋热闹起来。",
+    hint: "跟随真实会话状态，不是模拟动画。代理接到任务就出发，完成后回到基地。",
+  },
+
   // Settings page
   settings: {
     back: "返回",
@@ -105,6 +127,7 @@ export const zh: LocaleDict = {
     themeLight: "浅色",
     themeDark: "深色",
     themeSystem: "跟随系统",
+    themeLavender: "浅紫色",
     security: "安全",
     devicesDesc: "管理可以访问此服务器的设备",
     logging: "日志",

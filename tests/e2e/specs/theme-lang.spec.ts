@@ -14,7 +14,7 @@ test.describe("Theme & Language", () => {
 
     // Normalize starting state to Light so the toggle assertion is deterministic
     // regardless of the app's default theme.
-    const themeToggle = page.getByRole("button", { name: /Light|Dark|System|亮色|暗色|跟随系统/i });
+    const themeToggle = page.getByRole("button", { name: /Lavender|Light|Dark|System|浅紫色|亮色|暗色|跟随系统/i });
     await themeToggle.click();
     await page.waitForTimeout(300);
     const lightOption = page.getByRole("button", { name: /^(Light|亮色)$/i });
